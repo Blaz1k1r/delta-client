@@ -80,7 +80,7 @@ let package = Package(
     .library(name: "StaticDeltaCore", type: .static, targets: productTargets),
   ],
   dependencies: [
-    .package(url: "https://github.com/weichsel/ZIPFoundation.git", from: "0.9.0"),
+    .package(url: "https://github.com/weichsel/ZIPFoundation.git", from: "0.9.20"),
     .package(url: "https://github.com/apple/swift-collections.git", from: "1.0.3"),
     .package(url: "https://github.com/apple/swift-atomics.git", from: "1.0.2"),
     .package(url: "https://github.com/stackotter/ecs.git", branch: "master"),
@@ -93,7 +93,8 @@ let package = Package(
     .package(url: "https://github.com/OpenCombine/OpenCombine.git", from: "0.13.0"),
     .package(
       url: "https://github.com/stackotter/swift-png",
-      revision: "b68a5662ef9887c8f375854720b3621f772bf8c5"),
+      revision: "b68a5662ef9887c8f375854720b3621f772bf8c5"
+    ),
     .package(url: "https://github.com/stackotter/ASN1Parser", branch: "main"),
     .package(url: "https://github.com/krzyzanowskim/CryptoSwift", from: "1.6.0"),
     .package(url: "https://github.com/Kitura/SwiftyRequest.git", from: "3.1.0"),
