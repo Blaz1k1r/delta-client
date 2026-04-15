@@ -89,7 +89,7 @@ let package = Package(
     ),
     .package(
       url: "https://github.com/stackotter/swift-cross-ui",
-      revision: "20a6e6f4423edda14040fbd012f23d99a4b17823"
+      .upToNextMinor(from: "0.4.0")
     ),
   ],
   targets: targets
