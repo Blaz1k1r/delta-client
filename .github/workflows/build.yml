@@ -7,14 +7,14 @@ on:
 
 jobs:
   build-macos:
-    runs-on: macOS-12
+    runs-on: macOS-15
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: List Xcodes
         run: ls /Applications
-      - name: Force Xcode 14.2
-        run: sudo xcode-select -switch /Applications/Xcode_14.2.app
+      - name: Force Xcode 16.4
+        run: sudo xcode-select -switch /Applications/Xcode_16.4.app
       - name: Version
         run: swift --version
       - name: Download swift-bundler
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Swift
-        uses: swift-actions/setup-swift@v1
+        uses: swift-actions/setup-swift@v3
         with:
           swift-version: 5.7
       - name: Checkout
