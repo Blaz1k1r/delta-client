@@ -1,7 +1,7 @@
+import DefaultBackend
 import DeltaCore
 import Dispatch
 import Foundation
-import GtkBackend
 import SwiftCrossUI
 
 @main

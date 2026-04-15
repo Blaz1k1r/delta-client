@@ -74,7 +74,7 @@ var targets: [Target] = [
 
 let package = Package(
   name: "DeltaCore",
-  platforms: [.macOS(.v11)],
+  platforms: [.macOS(.v11), .iOS(.v14)],
   products: [
     .library(name: "DeltaCore", type: .dynamic, targets: productTargets),
     .library(name: "StaticDeltaCore", type: .static, targets: productTargets),
