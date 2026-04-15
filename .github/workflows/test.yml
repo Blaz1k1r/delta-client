@@ -23,9 +23,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Swift
-        uses: swift-actions/setup-swift@v2
+        uses: SwiftyLab/setup-swift@latest
         with:
-          swift-version: 5.7
+          swift-version: "5.7"
       - name: Checkout
         uses: actions/checkout@v6
       - name: Test

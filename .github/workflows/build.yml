@@ -22,24 +22,37 @@ jobs:
           curl -o swift-bundler -L https://github.com/stackotter/swift-bundler/releases/download/v2.0.4/swift-bundler
           chmod +x ./swift-bundler
           cp ./swift-bundler /usr/local/bin
-      - name: Build
+      - name: Build arm64
         run: |
-          ./swift-bundler bundle -c release -o . -u
+          ./swift-bundler bundle -c release -o .
           plutil -insert MetalCaptureEnabled -bool YES DeltaClient.app/Contents/Info.plist
-      - name: Zip .app
-        run: zip -r DeltaClient.zip DeltaClient.app
-      - name: Upload artifact
+          mv DeltaClient.app DeltaClient-arm64.app
+      - name: Build x86
+        run: |
+          ./swift-bundler bundle -c release -o . --arch x86_64
+          plutil -insert MetalCaptureEnabled -bool YES DeltaClient.app/Contents/Info.plist
+          mv DeltaClient.app DeltaClient-x86_64.app
+      - name: Zip .app (arm64)
+        run: zip -r DeltaClient-arm64.zip DeltaClient-arm64.app
+      - name: Zip .app (x86_64)
+        run: zip -r DeltaClient-x86_64.zip DeltaClient-x86_64.app
+      - name: Upload artifact (arm64)
         uses: actions/upload-artifact@v7
         with:
-          name: DeltaClient
-          path: ./DeltaClient.zip
+          name: DeltaClient-arm64
+          path: ./DeltaClient-arm64.zip
+      - name: Upload artifact (x86_64)
+        uses: actions/upload-artifact@v7
+        with:
+          name: DeltaClient-x86_64
+          path: ./DeltaClient-x86_64.zip
   build-linux:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Swift
-        uses: swift-actions/setup-swift@v2
+        uses: SwiftyLab/setup-swift@latest
         with:
-          swift-version: 5.7
+          swift-version: "5.7"
       - name: Checkout
         uses: actions/checkout@v6
       - name: Build
