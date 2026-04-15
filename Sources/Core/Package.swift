@@ -99,7 +99,7 @@ let package = Package(
     .package(url: "https://github.com/krzyzanowskim/CryptoSwift", from: "1.6.0"),
     .package(url: "https://github.com/Kitura/SwiftyRequest.git", from: "3.1.0"),
     .package(url: "https://github.com/JWhitmore1/SwiftCPUDetect", branch: "main"),
-    .package(url: "https://github.com/sushichop/Puppy", from: "0.6.0"),
+    .package(url: "https://github.com/sushichop/Puppy", .upToNextMinor(from: "0.9.0")),
     .package(url: "https://github.com/onevcat/Rainbow", from: "4.0.1"),
   ],
   targets: targets
