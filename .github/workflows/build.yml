@@ -17,21 +17,30 @@ jobs:
         run: sudo xcode-select -switch /Applications/Xcode_16.4.app
       - name: Version
         run: swift --version
-      - name: Download swift-bundler
+
+      - name: Cache swift-bundler
+        id: cache-swift-bundler
+        uses: actions/cache@v5
+        with:
+          path: sbun
+          key: ${{ runner.os }}-swift-bundler
+      - name: Build swift-bundler
+        if: steps.cache-swift-bundler.outputs.cache-hit != 'true'
         run: |
-          curl -o swift-bundler -L https://github.com/stackotter/swift-bundler/releases/download/v2.0.4/swift-bundler
-          chmod +x ./swift-bundler
-          cp ./swift-bundler /usr/local/bin
+          git clone https://github.com/moreSwift/swift-bundler
+          cd swift-bundler
+          git checkout 6d72c4f442cc2c57c2559f3df21b3777b1d0a917
+          swift build --product swift-bundler
+          cp .build/debug/swift-bundler ../sbun
+
       - name: Build arm64
         run: |
-          ./swift-bundler bundle -c release -o .
-          plutil -insert MetalCaptureEnabled -bool YES DeltaClient.app/Contents/Info.plist
-          mv DeltaClient.app DeltaClient-arm64.app
+          ./sbun bundle -c release --arch arm64
+          mv "$(./sbun bundle --show-bundle-path)" DeltaClient-arm64.app
       - name: Build x86
         run: |
-          ./swift-bundler bundle -c release -o . --arch x86_64
-          plutil -insert MetalCaptureEnabled -bool YES DeltaClient.app/Contents/Info.plist
-          mv DeltaClient.app DeltaClient-x86_64.app
+          ./sbun bundle -c release --arch x86_64
+          mv "$(./sbun bundle --show-bundle-path)" DeltaClient-x86_64.app
       - name: Zip .app (arm64)
         run: zip -r DeltaClient-arm64.zip DeltaClient-arm64.app
       - name: Zip .app (x86_64)
@@ -52,7 +61,7 @@ jobs:
       - name: Setup Swift
         uses: SwiftyLab/setup-swift@latest
         with:
-          swift-version: "5.7"
+          swift-version: "5.9"
       - name: Checkout
         uses: actions/checkout@v6
       - name: Build
